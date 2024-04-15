@@ -1,0 +1,30 @@
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
+
+.header {
+  background-color: $header-footer-bg;
+
+  > div {
+    @include containerSettings;
+
+    > .header__logo {
+      font-size: 28px;
+      line-height: 33px;
+      color: white;
+      cursor: pointer;
+    }
+
+    > .header__userimg {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      > svg {
+        color: white;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+      }
+    }
+  }
+}

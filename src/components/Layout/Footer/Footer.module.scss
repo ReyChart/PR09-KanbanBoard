@@ -1,0 +1,16 @@
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
+
+.footer {
+  background-color: $header-footer-bg;
+
+  > div {
+    @include containerSettings;
+    color: $white;
+
+    > div {
+      display: flex;
+      gap: 36px;
+    }
+  }
+}
