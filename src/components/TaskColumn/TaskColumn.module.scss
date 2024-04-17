@@ -1,0 +1,68 @@
+@import '@/assets/styles/variables';
+
+.task__column {
+  width: 282px;
+  background-color: $gray;
+  padding: 12px;
+  border-radius: 10px;
+
+  > h2 {
+    margin-bottom: 15px;
+  }
+
+  > .task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 8px;
+    background-color: $white;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    word-wrap: break-word;
+    cursor: pointer;
+
+    > button {
+      background-color: transparent;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  > .task__add {
+    > input {
+      width: 100%;
+      padding: 7px 8px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+    }
+
+    > .btn__add_disabled {
+      padding: 5px 0;
+      color: $font-gray-color;
+      cursor: default;
+    }
+
+    > .btn__submit {
+      padding: 5px 10px;
+      background-color: $white;
+      border-radius: 5px;
+
+      &:hover {
+        color: $white;
+        background-color: $main-bg;
+        transition: all 0.4s ease-in-out;
+      }
+    }
+  }
+
+  > .btn__add {
+    padding: 5px 0;
+    color: $font-gray-color;
+    background-color: transparent;
+
+    &:hover {
+      color: $black;
+      transition: color 0.4s ease-in-out;
+    }
+  }
+}
