@@ -21,16 +21,19 @@ const TaskList = () => {
               title="Ready"
               tasks={tasks.filter((task) => task.state === 'ready')}
               addTaskFunction={(title) => addTask(title, 'ready')}
+              availableTasks={tasks.filter((task) => task.state === 'backlog')}
             />
             <TaskColumn
               title="In Progress"
-              tasks={tasks.filter((task) => task.state === 'in-progress')}
-              addTaskFunction={(title) => addTask(title, 'in-progress')}
+              tasks={tasks.filter((task) => task.state === 'in progress')}
+              addTaskFunction={(title) => addTask(title, 'in progress')}
+              availableTasks={tasks.filter((task) => task.state === 'ready')}
             />
             <TaskColumn
               title="Finished"
               tasks={tasks.filter((task) => task.state === 'finished')}
               addTaskFunction={(title) => addTask(title, 'finished')}
+              availableTasks={tasks.filter((task) => task.state === 'in progress')}
             />
           </div>
         </div>

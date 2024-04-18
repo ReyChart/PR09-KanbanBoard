@@ -1,22 +1,34 @@
 import { ChangeEvent, FunctionComponent, useState } from 'react';
+import Select, { SingleValue } from 'react-select';
 import { ITask } from '../../provider/KanbanContext';
 import { useKanban } from '../../hooks/useKanban';
 import clsx from 'clsx';
 import { FiX } from 'react-icons/fi';
-
 import styles from './TaskColumn.module.scss';
 
 interface TaskColumnProps {
   title: string;
   tasks: ITask[];
   addTaskFunction: (title: string, state: ITask['state']) => void;
+  availableTasks?: ITask[];
 }
 
-const TaskColumn: FunctionComponent<TaskColumnProps> = ({ title, tasks, addTaskFunction }) => {
+interface OptionType {
+  value: string;
+  label: string;
+}
+
+const TaskColumn: FunctionComponent<TaskColumnProps> = ({
+  title,
+  tasks,
+  addTaskFunction,
+  availableTasks,
+}) => {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [isAddingTask, setIsAddingTask] = useState(false);
   const [hoveredTaskId, setHoveredTaskId] = useState<string | null>(null);
-  const { removeTask } = useKanban();
+  const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
+  const { removeTask, transferTask } = useKanban();
 
   const handleAddTaskClick = () => {
     setIsAddingTask(true);
@@ -26,37 +38,29 @@ const TaskColumn: FunctionComponent<TaskColumnProps> = ({ title, tasks, addTaskF
     setNewTaskTitle(event.target.value);
   };
 
-  const handleSubmitNewTask = () => {
-    if (newTaskTitle.trim() !== '') {
-      let state: ITask['state'];
-      switch (title) {
-        case 'Backlog':
-          state = 'backlog';
-          break;
-        case 'Ready':
-          state = 'ready';
-          break;
-        case 'In Progress':
-          state = 'in-progress';
-          break;
-        case 'Finished':
-          state = 'finished';
-          break;
-        default:
-          console.error('Invalid title for task state');
-          return;
-      }
+  const handleChange = (option: SingleValue<OptionType>) => {
+    setSelectedOption(option);
+  };
 
-      addTaskFunction(newTaskTitle.trim(), state);
+  const handleSubmitNewTask = () => {
+    if (title === 'Backlog' && newTaskTitle.trim() !== '') {
+      addTaskFunction(newTaskTitle.trim(), 'backlog');
       setNewTaskTitle('');
+      setIsAddingTask(false);
+    } else if (selectedOption) {
+      transferTask(selectedOption.value, title.toLowerCase() as ITask['state']);
+      setSelectedOption(null);
       setIsAddingTask(false);
     }
   };
 
-  const buttonClass = clsx(styles.button, {
-    [styles.btn__add_disabled]: !newTaskTitle.trim() && isAddingTask,
-    [styles.btn__submit]: newTaskTitle.trim(),
-  });
+  const options: OptionType[] =
+    availableTasks?.map((task) => ({
+      value: task.id,
+      label: task.title,
+    })) || [];
+
+  const addButtonDisabled = title !== 'Backlog' && !options.length;
 
   return (
     <div className={styles.task__column}>
@@ -78,22 +82,40 @@ const TaskColumn: FunctionComponent<TaskColumnProps> = ({ title, tasks, addTaskF
       ))}
       {isAddingTask ? (
         <div className={styles.task__add}>
-          <input
-            type="text"
-            value={newTaskTitle}
-            onChange={handleNewTaskTitleChange}
-            placeholder="Enter task title..."
-          />
+          {title === 'Backlog' ? (
+            <input
+              type="text"
+              value={newTaskTitle}
+              onChange={handleNewTaskTitleChange}
+              placeholder="Enter task title..."
+              className={styles.input}
+            />
+          ) : (
+            <Select
+              className={styles.selector}
+              value={selectedOption}
+              onChange={handleChange}
+              options={options}
+              placeholder="Select a task..."
+            />
+          )}
           <button
             onClick={handleSubmitNewTask}
-            disabled={!newTaskTitle.trim()}
-            className={buttonClass}
+            disabled={!newTaskTitle.trim() && !selectedOption}
+            className={clsx(styles.button, {
+              [styles.btn__add_disabled]: addButtonDisabled,
+              [styles.btn__submit]: newTaskTitle.trim() || selectedOption,
+            })}
           >
-            {newTaskTitle.trim() ? 'Submit' : '+ Add card'}
+            Submit
           </button>
         </div>
       ) : (
-        <button onClick={handleAddTaskClick} className={styles.btn__add}>
+        <button
+          onClick={handleAddTaskClick}
+          className={clsx(styles.btn__add, { [styles.btn__add_disabled]: addButtonDisabled })}
+          disabled={addButtonDisabled}
+        >
           + Add card
         </button>
       )}

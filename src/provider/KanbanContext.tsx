@@ -4,25 +4,26 @@ import uuid from 'react-uuid';
 export interface ITask {
   id: string;
   title: string;
-  state: 'backlog' | 'ready' | 'in-progress' | 'finished';
+  state: 'backlog' | 'ready' | 'in progress' | 'finished';
 }
 
 interface KanbanContextProps {
   tasks: ITask[];
   addTask: (title: string, state: ITask['state']) => void;
   removeTask: (id: string) => void;
+  transferTask: (id: string, newState: ITask['state']) => void;
 }
 
 export const KanbanContext = createContext<KanbanContextProps>({
   tasks: [],
   addTask: () => {},
   removeTask: () => {},
+  transferTask: () => {},
 });
 
 export const KanbanProvider: FunctionComponent<{ children: ReactNode }> = ({ children }) => {
   const [tasks, setTasks] = useState<ITask[]>(() => {
     const loadedTasks = localStorage.getItem('kanban-tasks');
-
     return loadedTasks ? JSON.parse(loadedTasks) : [];
   });
 
@@ -32,7 +33,6 @@ export const KanbanProvider: FunctionComponent<{ children: ReactNode }> = ({ chi
       title: title,
       state: state,
     };
-
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
     localStorage.setItem('kanban-tasks', JSON.stringify(updatedTasks));
@@ -44,8 +44,19 @@ export const KanbanProvider: FunctionComponent<{ children: ReactNode }> = ({ chi
     localStorage.setItem('kanban-tasks', JSON.stringify(updatedTasks));
   };
 
+  const transferTask = (id: string, newState: ITask['state']) => {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, state: newState };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+    localStorage.setItem('kanban-tasks', JSON.stringify(updatedTasks));
+  };
+
   return (
-    <KanbanContext.Provider value={{ tasks, addTask, removeTask }}>
+    <KanbanContext.Provider value={{ tasks, addTask, removeTask, transferTask }}>
       {children}
     </KanbanContext.Provider>
   );
