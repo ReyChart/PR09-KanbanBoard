@@ -10,11 +10,11 @@
     margin-bottom: 15px;
   }
 
-  > .task {
+  > .task__name {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 7px 8px;
+    padding: 8px 8px;
     background-color: $white;
     margin-bottom: 15px;
     border-radius: 5px;
@@ -28,41 +28,46 @@
     }
   }
 
-  > .task__add {
+  > .task__form {
     > input {
       width: 100%;
-      padding: 7px 8px;
-      margin-bottom: 15px;
+      padding: 8px 8px;
       border-radius: 5px;
     }
 
-    > .btn__add_disabled {
-      padding: 5px 0;
-      color: $font-gray-color;
-      cursor: default;
-    }
+    > .btn__wrapper {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
 
-    > .btn__submit {
-      padding: 5px 15px;
-      background-color: $white;
-      border-radius: 5px;
+      > .btn {
+        padding: 8px 0;
+        color: $font-gray-color;
+        background-color: transparent;
 
-      &:hover {
-        color: $white;
-        background-color: $main-bg;
-        transition: all 0.4s ease-in-out;
+        &:disabled {
+          cursor: default;
+        }
+
+        &:hover:not(:disabled) {
+          color: $black;
+          transition: color 0.4s ease-in-out;
+        }
+
+        &.btn__submit,
+        &.btn__cancel {
+          padding: 8px 15px;
+          color: $black;
+          background-color: $white;
+          border-radius: 5px;
+
+          &:hover {
+            color: $white;
+            background-color: $main-bg;
+            transition: all 0.4s ease-in-out;
+          }
+        }
       }
-    }
-  }
-
-  > .btn__add {
-    padding: 5px 0;
-    color: $font-gray-color;
-    background-color: transparent;
-
-    &:hover {
-      color: $black;
-      transition: color 0.4s ease-in-out;
     }
   }
 }

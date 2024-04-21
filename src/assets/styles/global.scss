@@ -18,3 +18,34 @@ body {
   max-width: 1205px;
   margin: 0 auto;
 }
+
+.select {
+  &__control {
+    cursor: pointer !important;
+    border-radius: 5px !important;
+    border: none !important;
+
+    &--is-focused {
+      box-shadow: 0 0 transparent !important;
+    }
+  }
+
+  &__menu {
+    position: relative !important;
+    border-radius: 5px !important;
+    z-index: 10;
+
+    &-list {
+      padding: 0 !important;
+      border-radius: 5px !important;
+      box-shadow: 0 0 transparent !important;
+    }
+  }
+
+  &__option {
+    &--is-selected {
+      background-color: $main-bg !important;
+      color: $white !important;
+    }
+  }
+}
