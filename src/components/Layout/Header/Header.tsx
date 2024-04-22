@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useState, useEffect, useCallback } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 import clsx from 'clsx';
 
@@ -7,9 +7,31 @@ import styles from './Header.module.scss';
 const Header: FunctionComponent = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+  const toggleDropdown = useCallback(() => {
+    setIsDropdownOpen((prevState) => !prevState);
+  }, []);
+
+  const handleLinkClick = useCallback((event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    event.preventDefault();
+    setIsDropdownOpen(false);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (!target.closest(`.${styles.header__user}`)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
 
   return (
     <header className={styles.header}>
@@ -29,10 +51,14 @@ const Header: FunctionComponent = () => {
           {isDropdownOpen && (
             <ul className={styles.header__dropdown}>
               <li>
-                <a href="#">Profile</a>
+                <a onClick={handleLinkClick} href="#">
+                  Profile
+                </a>
               </li>
               <li>
-                <a href="#">Log Out</a>
+                <a onClick={handleLinkClick} href="#">
+                  Log Out
+                </a>
               </li>
             </ul>
           )}

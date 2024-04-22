@@ -27,7 +27,12 @@ body {
 
     &--is-focused {
       box-shadow: 0 0 transparent !important;
+      color: blue !important;
     }
+  }
+
+  &__single-value {
+    color: $black !important;
   }
 
   &__menu {
@@ -43,6 +48,8 @@ body {
   }
 
   &__option {
+    cursor: pointer !important;
+
     &--is-selected {
       background-color: $main-bg !important;
       color: $white !important;

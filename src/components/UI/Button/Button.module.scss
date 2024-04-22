@@ -1,0 +1,30 @@
+@import '@/assets/styles/variables';
+
+.btn {
+  padding: 8px 0;
+  color: $font-gray-color;
+  background-color: transparent;
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &:hover:not(:disabled) {
+    color: $black;
+    transition: color 0.4s ease-in-out;
+  }
+
+  &.btn__submit,
+  &.btn__cancel {
+    padding: 8px 15px;
+    color: $black;
+    background-color: $white;
+    border-radius: 5px;
+
+    &:hover {
+      color: $white;
+      background-color: $main-bg;
+      transition: all 0.4s ease-in-out;
+    }
+  }
+}

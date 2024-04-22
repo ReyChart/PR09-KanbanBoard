@@ -1,4 +1,11 @@
-import { createContext, useState, FunctionComponent, ReactNode } from 'react';
+import {
+  FunctionComponent,
+  useState,
+  useEffect,
+  useCallback,
+  createContext,
+  ReactNode,
+} from 'react';
 import uuid from 'react-uuid';
 
 export interface ITask {
@@ -7,14 +14,14 @@ export interface ITask {
   state: 'backlog' | 'ready' | 'in progress' | 'finished';
 }
 
-interface KanbanContextProps {
+interface IKanbanContextProps {
   tasks: ITask[];
   addTask: (title: string, state: ITask['state']) => void;
   removeTask: (id: string) => void;
   transferTask: (id: string, newState: ITask['state']) => void;
 }
 
-export const KanbanContext = createContext<KanbanContextProps>({
+export const KanbanContext = createContext<IKanbanContextProps>({
   tasks: [],
   addTask: () => {},
   removeTask: () => {},
@@ -27,33 +34,28 @@ export const KanbanProvider: FunctionComponent<{ children: ReactNode }> = ({ chi
     return loadedTasks ? JSON.parse(loadedTasks) : [];
   });
 
-  const addTask = (title: string, state: ITask['state'] = 'backlog') => {
+  useEffect(() => {
+    localStorage.setItem('kanban-tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+  const addTask = useCallback((title: string, state: ITask['state'] = 'backlog'): void => {
     const newTask: ITask = {
       id: uuid(),
-      title: title,
-      state: state,
+      title,
+      state,
     };
-    const updatedTasks = [...tasks, newTask];
-    setTasks(updatedTasks);
-    localStorage.setItem('kanban-tasks', JSON.stringify(updatedTasks));
-  };
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+  }, []);
 
-  const removeTask = (id: string) => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    setTasks(updatedTasks);
-    localStorage.setItem('kanban-tasks', JSON.stringify(updatedTasks));
-  };
+  const removeTask = useCallback((id: string): void => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+  }, []);
 
-  const transferTask = (id: string, newState: ITask['state']) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === id) {
-        return { ...task, state: newState };
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
-    localStorage.setItem('kanban-tasks', JSON.stringify(updatedTasks));
-  };
+  const transferTask = useCallback((id: string, newState: ITask['state']): void => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => (task.id === id ? { ...task, state: newState } : task))
+    );
+  }, []);
 
   return (
     <KanbanContext.Provider value={{ tasks, addTask, removeTask, transferTask }}>

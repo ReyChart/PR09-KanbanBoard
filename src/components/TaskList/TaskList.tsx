@@ -1,39 +1,54 @@
+import { FunctionComponent, useMemo } from 'react';
 import Layout from '../Layout/Layout';
 import { useKanban } from '../../hooks/useKanban';
 import TaskColumn from '../TaskColumn/TaskColumn';
 
 import styles from './TaskList.module.scss';
 
-const TaskList = () => {
+const TaskList: FunctionComponent = () => {
   const { tasks, addTask } = useKanban();
+
+  const { backlogTasks, readyTasks, inProgressTasks, finishedTasks } = useMemo(() => {
+    return {
+      backlogTasks: tasks.filter((task) => task.state === 'backlog'),
+      readyTasks: tasks.filter((task) => task.state === 'ready'),
+      inProgressTasks: tasks.filter((task) => task.state === 'in progress'),
+      finishedTasks: tasks.filter((task) => task.state === 'finished'),
+    };
+  }, [tasks]);
+
+  const { addBacklogTask, addReadyTask, addInProgressTask, addFinishedTask } = useMemo(() => {
+    return {
+      addBacklogTask: (title: string) => addTask(title, 'backlog'),
+      addReadyTask: (title: string) => addTask(title, 'ready'),
+      addInProgressTask: (title: string) => addTask(title, 'in progress'),
+      addFinishedTask: (title: string) => addTask(title, 'finished'),
+    };
+  }, [addTask]);
 
   return (
     <Layout>
       <main>
         <div className="container">
           <div className={styles.task__list}>
-            <TaskColumn
-              title="Backlog"
-              tasks={tasks.filter((task) => task.state === 'backlog')}
-              addTaskFunction={(title) => addTask(title, 'backlog')}
-            />
+            <TaskColumn title="Backlog" tasks={backlogTasks} addTaskFunction={addBacklogTask} />
             <TaskColumn
               title="Ready"
-              tasks={tasks.filter((task) => task.state === 'ready')}
-              addTaskFunction={(title) => addTask(title, 'ready')}
-              availableTasks={tasks.filter((task) => task.state === 'backlog')}
+              tasks={readyTasks}
+              addTaskFunction={addReadyTask}
+              availableTasks={backlogTasks}
             />
             <TaskColumn
               title="In Progress"
-              tasks={tasks.filter((task) => task.state === 'in progress')}
-              addTaskFunction={(title) => addTask(title, 'in progress')}
-              availableTasks={tasks.filter((task) => task.state === 'ready')}
+              tasks={inProgressTasks}
+              addTaskFunction={addInProgressTask}
+              availableTasks={readyTasks}
             />
             <TaskColumn
               title="Finished"
-              tasks={tasks.filter((task) => task.state === 'finished')}
-              addTaskFunction={(title) => addTask(title, 'finished')}
-              availableTasks={tasks.filter((task) => task.state === 'in progress')}
+              tasks={finishedTasks}
+              addTaskFunction={addFinishedTask}
+              availableTasks={inProgressTasks}
             />
           </div>
         </div>

@@ -2,8 +2,9 @@ import { FunctionComponent, useState, useMemo, useCallback } from 'react';
 import { ITask } from '../../provider/KanbanContext';
 import { useKanban } from '../../hooks/useKanban';
 import { FiX } from 'react-icons/fi';
+import Button from '../UI/Button/Button';
+import InputField from '../UI/InputField/InputField';
 import Select from 'react-select';
-import clsx from 'clsx';
 
 import styles from './TaskColumn.module.scss';
 
@@ -112,7 +113,7 @@ const TaskColumn: FunctionComponent<ITaskColumnProps> = ({
         {addingTask && (
           <>
             {title === 'Backlog' ? (
-              <input
+              <InputField
                 type="text"
                 value={newTaskTitle}
                 onChange={handleNewTaskTitleChange}
@@ -131,19 +132,17 @@ const TaskColumn: FunctionComponent<ITaskColumnProps> = ({
           </>
         )}
         <div className={styles.btn__wrapper}>
-          <button
+          <Button
             onClick={shouldShowSubmit ? handleSubmitNewTask : handleAddTaskClick}
             disabled={shouldShowSubmit ? false : addButtonDisabled}
-            className={clsx(styles.btn, {
-              [styles.btn__submit]: shouldShowSubmit,
-            })}
+            variant={shouldShowSubmit ? 'submit' : 'add'}
           >
             {shouldShowSubmit ? 'Submit' : '+ Add card'}
-          </button>
+          </Button>
           {addingTask && (
-            <button onClick={handleCancel} className={clsx(styles.btn, styles.btn__cancel)}>
+            <Button onClick={handleCancel} variant="cancel">
               Cancel
-            </button>
+            </Button>
           )}
         </div>
       </form>
