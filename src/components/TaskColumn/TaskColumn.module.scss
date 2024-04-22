@@ -2,9 +2,11 @@
 
 .task__column {
   width: 282px;
+  max-height: 700px;
   background-color: $gray;
   padding: 12px;
   border-radius: 10px;
+  overflow: auto;
 
   > h2 {
     margin-bottom: 15px;

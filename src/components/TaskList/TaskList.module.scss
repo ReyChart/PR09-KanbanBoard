@@ -1,6 +1,7 @@
 .task__list {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
-  padding-top: 20px;
+  padding: 20px 0 32px;
 }

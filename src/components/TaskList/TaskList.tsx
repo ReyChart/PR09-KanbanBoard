@@ -30,7 +30,7 @@ const TaskList: FunctionComponent = () => {
     <Layout>
       <main>
         <div className="container">
-          <div className={styles.task__list}>
+          <section className={styles.task__list}>
             <TaskColumn title="Backlog" tasks={backlogTasks} addTaskFunction={addBacklogTask} />
             <TaskColumn
               title="Ready"
@@ -50,7 +50,7 @@ const TaskList: FunctionComponent = () => {
               addTaskFunction={addFinishedTask}
               availableTasks={inProgressTasks}
             />
-          </div>
+          </section>
         </div>
       </main>
     </Layout>
