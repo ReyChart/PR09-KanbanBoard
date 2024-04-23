@@ -1,6 +1,7 @@
 import { FunctionComponent, useState, useMemo, useCallback } from 'react';
 import { ITask } from '../../provider/KanbanContext';
 import { useKanban } from '../../hooks/useKanban';
+import { Link } from 'react-router-dom';
 import { FiX } from 'react-icons/fi';
 import Button from '../UI/Button/Button';
 import InputField from '../UI/InputField/InputField';
@@ -95,19 +96,26 @@ const TaskColumn: FunctionComponent<ITaskColumnProps> = ({
     <div className={styles.task__column}>
       <h2>{title}</h2>
       {tasks.map((task) => (
-        <div
-          key={task.id}
-          className={styles.task__name}
-          onMouseEnter={() => setHoveredTaskId(task.id)}
-          onMouseLeave={() => setHoveredTaskId(null)}
-        >
-          {task.title}
-          {hoveredTaskId === task.id && (
-            <button onClick={() => removeTask(task.id)}>
-              <FiX />
-            </button>
-          )}
-        </div>
+        <Link key={task.id} to={`/tasks/${task.id}`}>
+          <div
+            key={task.id}
+            className={styles.task__name}
+            onMouseEnter={() => setHoveredTaskId(task.id)}
+            onMouseLeave={() => setHoveredTaskId(null)}
+          >
+            {task.title}
+            {hoveredTaskId === task.id && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  removeTask(task.id);
+                }}
+              >
+                <FiX />
+              </button>
+            )}
+          </div>
+        </Link>
       ))}
       <form className={styles.task__form} onSubmit={handleSubmit}>
         {addingTask && (

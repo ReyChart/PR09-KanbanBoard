@@ -13,7 +13,7 @@ export const routes: IRoutes[] = [
     component: TaskList,
   },
   {
-    path: '/tasks/:taskId',
+    path: '/tasks/:id',
     component: TaskDetails,
   },
 ];

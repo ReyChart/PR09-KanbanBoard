@@ -1,4 +1,5 @@
-import { FunctionComponent, useState, useEffect, useCallback } from 'react';
+import { FunctionComponent, useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { IoIosArrowDown } from 'react-icons/io';
 import clsx from 'clsx';
 
@@ -6,15 +7,25 @@ import styles from './Header.module.scss';
 
 const Header: FunctionComponent = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const disabledAnimation = useRef(true);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const toggleDropdown = useCallback(() => {
     setIsDropdownOpen((prevState) => !prevState);
+    disabledAnimation.current = false;
   }, []);
 
   const handleLinkClick = useCallback((event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.preventDefault();
     setIsDropdownOpen(false);
   }, []);
+
+  const handleLinkHomeClick = useCallback(() => {
+    if (pathname !== '/') {
+      navigate('/');
+    }
+  }, [pathname, navigate]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -24,26 +35,25 @@ const Header: FunctionComponent = () => {
       }
     };
 
-    if (isDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isDropdownOpen]);
+  }, []);
 
   return (
     <header className={styles.header}>
       <div className="container">
-        <h1 className={styles.header__logo}>Awesome Kanban Board</h1>
+        <h1 onClick={handleLinkHomeClick} className={styles.header__logo}>
+          Awesome Kanban Board
+        </h1>
         <div className={styles.header__user}>
-          <img src="./userAvatar.svg" alt="User avatar" />
+          <img src="/userAvatar.svg" alt="User avatar" />
           <button
             onClick={toggleDropdown}
             className={clsx(styles.btn__arrow, {
               [styles.arrow__rotate_first]: isDropdownOpen,
-              [styles.arrow__rotate_second]: !isDropdownOpen && isDropdownOpen !== null,
+              [styles.arrow__rotate_second]: !isDropdownOpen && !disabledAnimation.current,
             })}
           >
             <IoIosArrowDown />

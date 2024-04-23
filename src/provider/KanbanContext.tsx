@@ -11,6 +11,7 @@ import uuid from 'react-uuid';
 export interface ITask {
   id: string;
   title: string;
+  description: string;
   state: 'backlog' | 'ready' | 'in progress' | 'finished';
 }
 
@@ -19,6 +20,7 @@ interface IKanbanContextProps {
   addTask: (title: string, state: ITask['state']) => void;
   removeTask: (id: string) => void;
   transferTask: (id: string, newState: ITask['state']) => void;
+  updateTaskDescription: (id: string, description: string) => void;
 }
 
 export const KanbanContext = createContext<IKanbanContextProps>({
@@ -26,6 +28,7 @@ export const KanbanContext = createContext<IKanbanContextProps>({
   addTask: () => {},
   removeTask: () => {},
   transferTask: () => {},
+  updateTaskDescription: () => {},
 });
 
 export const KanbanProvider: FunctionComponent<{ children: ReactNode }> = ({ children }) => {
@@ -38,14 +41,18 @@ export const KanbanProvider: FunctionComponent<{ children: ReactNode }> = ({ chi
     localStorage.setItem('kanban-tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  const addTask = useCallback((title: string, state: ITask['state'] = 'backlog'): void => {
-    const newTask: ITask = {
-      id: uuid(),
-      title,
-      state,
-    };
-    setTasks((prevTasks) => [...prevTasks, newTask]);
-  }, []);
+  const addTask = useCallback(
+    (title: string, state: ITask['state'] = 'backlog', description: string = ''): void => {
+      const newTask: ITask = {
+        id: uuid(),
+        title,
+        description,
+        state,
+      };
+      setTasks((prevTasks) => [...prevTasks, newTask]);
+    },
+    []
+  );
 
   const removeTask = useCallback((id: string): void => {
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
@@ -57,8 +64,21 @@ export const KanbanProvider: FunctionComponent<{ children: ReactNode }> = ({ chi
     );
   }, []);
 
+  const updateTaskDescription = useCallback((id: string, description: string): void => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => {
+        if (task.id === id) {
+          return { ...task, description };
+        }
+        return task;
+      })
+    );
+  }, []);
+
   return (
-    <KanbanContext.Provider value={{ tasks, addTask, removeTask, transferTask }}>
+    <KanbanContext.Provider
+      value={{ tasks, addTask, removeTask, transferTask, updateTaskDescription }}
+    >
       {children}
     </KanbanContext.Provider>
   );

@@ -31,18 +31,18 @@
         background: none;
         color: $white;
 
+        &.arrow__rotate_first {
+          animation: rotate-first-half 0.4s ease-in-out both;
+        }
+
+        &.arrow__rotate_second {
+          animation: rotate-second-half 0.4s ease-in-out both;
+        }
+
         > svg {
           width: 24px;
           height: 24px;
         }
-      }
-
-      > .arrow__rotate_first {
-        animation: rotate-first-half 0.4s ease-in-out both;
-      }
-
-      > .arrow__rotate_second {
-        animation: rotate-second-half 0.4s ease-in-out both;
       }
     }
 

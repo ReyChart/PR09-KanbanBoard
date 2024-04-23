@@ -12,21 +12,26 @@
     margin-bottom: 15px;
   }
 
-  > .task__name {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 8px;
-    background-color: $white;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    word-wrap: break-word;
-    cursor: pointer;
+  > a {
+    text-decoration: none;
+    color: inherit;
 
-    > button {
-      background-color: transparent;
-      width: 20px;
-      height: 20px;
+    > .task__name {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 8px;
+      background-color: $white;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      word-wrap: break-word;
+      cursor: pointer;
+
+      > button {
+        background-color: transparent;
+        width: 20px;
+        height: 20px;
+      }
     }
   }
 
