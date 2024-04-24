@@ -1,0 +1,71 @@
+@import '@/assets/styles/variables';
+
+.taskDetails {
+  height: 540px;
+  background-color: $white;
+  padding: 20px 30px;
+  margin: 20px 0 32px;
+  border-radius: 5px;
+  overflow-y: auto;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 35px;
+
+    > h2 {
+      font-size: 24px;
+      line-height: 28px;
+    }
+
+    > button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      padding: 5px;
+      color: $font-gray-color;
+      border-radius: 5px;
+
+      > svg {
+        align-self: center;
+        width: 32px;
+        height: 32px;
+      }
+
+      &:hover {
+        color: $white;
+        background-color: $main-bg;
+        transition: all 0.4s ease-in-out;
+      }
+    }
+  }
+
+  > .taskDetails__form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    > p {
+      word-break: break-all;
+      white-space: pre-wrap;
+      cursor: pointer;
+    }
+
+    > .textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid $gray;
+      border-radius: 5px;
+      resize: vertical;
+    }
+
+    > div {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+    }
+  }
+}

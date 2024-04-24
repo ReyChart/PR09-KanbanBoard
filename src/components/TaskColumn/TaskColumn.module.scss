@@ -1,6 +1,6 @@
 @import '@/assets/styles/variables';
 
-.task__column {
+.taskColumn {
   width: 282px;
   max-height: 700px;
   background-color: $gray;
@@ -12,11 +12,11 @@
     margin-bottom: 15px;
   }
 
-  > a {
+  > .taskColumn__link {
     text-decoration: none;
     color: inherit;
 
-    > .task__name {
+    > div {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -24,18 +24,23 @@
       background-color: $white;
       margin-bottom: 15px;
       border-radius: 5px;
-      word-wrap: break-word;
       cursor: pointer;
+
+      > p {
+        width: 90%;
+        word-wrap: break-word;
+        word-break: break-all;
+      }
 
       > button {
         background-color: transparent;
-        width: 20px;
+        width: 10%;
         height: 20px;
       }
     }
   }
 
-  > .task__form {
+  > .taskColumn__form {
     > input {
       width: 100%;
       padding: 8px 8px;

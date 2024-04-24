@@ -15,6 +15,7 @@ body {
 }
 
 .container {
+  width: 100%;
   max-width: 1205px;
   margin: 0 auto;
 }
@@ -27,7 +28,6 @@ body {
 
     &--is-focused {
       box-shadow: 0 0 transparent !important;
-      color: blue !important;
     }
   }
 

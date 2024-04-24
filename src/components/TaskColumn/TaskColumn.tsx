@@ -93,13 +93,12 @@ const TaskColumn: FunctionComponent<ITaskColumnProps> = ({
   }, []);
 
   return (
-    <div className={styles.task__column}>
+    <div className={styles.taskColumn}>
       <h2>{title}</h2>
       {tasks.map((task) => (
-        <Link key={task.id} to={`/tasks/${task.id}`}>
+        <Link key={task.id} className={styles.taskColumn__link} to={`/tasks/${task.id}`}>
           <div
             key={task.id}
-            className={styles.task__name}
             onMouseEnter={() => setHoveredTaskId(task.id)}
             onMouseLeave={() => setHoveredTaskId(null)}
           >
@@ -117,7 +116,7 @@ const TaskColumn: FunctionComponent<ITaskColumnProps> = ({
           </div>
         </Link>
       ))}
-      <form className={styles.task__form} onSubmit={handleSubmit}>
+      <form className={styles.taskColumn__form} onSubmit={handleSubmit}>
         {addingTask && (
           <>
             {title === 'Backlog' ? (
