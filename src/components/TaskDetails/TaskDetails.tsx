@@ -64,7 +64,7 @@ const TaskDetails: FunctionComponent = () => {
         <section className={styles.taskDetails}>
           <div>
             <h2>{task ? task.title : 'Task not found'}</h2>
-            <button onClick={handleClose}>
+            <button onClick={handleClose} data-testid="close-button">
               <IoMdClose />
             </button>
           </div>
