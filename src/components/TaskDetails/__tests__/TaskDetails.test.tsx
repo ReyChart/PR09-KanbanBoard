@@ -58,7 +58,7 @@ describe('TaskDetails', () => {
     expect(screen.getByText('Change')).toBeInTheDocument();
   });
 
-  it('should call navigate("/") when the close button is clicked', () => {
+  it('should call navigate("/PR09-KanbanBoard/") when the close button is clicked', () => {
     render(
       <BrowserRouter>
         <TaskDetails />
@@ -66,6 +66,6 @@ describe('TaskDetails', () => {
     );
 
     fireEvent.click(screen.getByTestId('close-button'));
-    expect(mockNavigate).toHaveBeenCalledWith('/');
+    expect(mockNavigate).toHaveBeenCalledWith('/PR09-KanbanBoard/');
   });
 });
