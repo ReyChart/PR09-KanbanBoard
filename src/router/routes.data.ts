@@ -9,11 +9,11 @@ interface IRoutes {
 
 export const routes: IRoutes[] = [
   {
-    path: '/PR09-KanbanBoard',
+    path: '/',
     component: TaskList,
   },
   {
-    path: '/PR09-KanbanBoard/tasks/:id',
+    path: '/tasks/:id',
     component: TaskDetails,
   },
 ];

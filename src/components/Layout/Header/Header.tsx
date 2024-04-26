@@ -9,8 +9,8 @@ const Header: FunctionComponent = () => {
   const { pathname } = useLocation();
 
   const handleLinkHomeClick = useCallback(() => {
-    if (pathname !== '/PR09-KanbanBoard') {
-      navigate('/PR09-KanbanBoard');
+    if (pathname !== '/') {
+      navigate('/');
     }
   }, [pathname, navigate]);
 

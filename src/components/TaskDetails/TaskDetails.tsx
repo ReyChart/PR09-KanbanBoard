@@ -41,7 +41,7 @@ const TaskDetails: FunctionComponent = () => {
   }, [defaultDescription]);
 
   const handleClose = useCallback(() => {
-    navigate('/PR09-KanbanBoard');
+    navigate('/');
   }, [navigate]);
 
   useEffect(() => {

@@ -95,11 +95,7 @@ const TaskColumn: FunctionComponent<ITaskColumnProps> = ({
     <div className={styles.taskColumn}>
       <h2>{title}</h2>
       {tasks.map((task) => (
-        <Link
-          key={task.id}
-          className={styles.taskColumn__link}
-          to={`/PR09-KanbanBoard/tasks/${task.id}`}
-        >
+        <Link key={task.id} className={styles.taskColumn__link} to={`/tasks/${task.id}`}>
           <div>
             <p>{task.title}</p>
             <button
