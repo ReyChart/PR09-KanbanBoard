@@ -1,12 +1,23 @@
 @import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
 
 .taskColumn {
-  width: 282px;
+  @include transition(max-width);
+  width: 100%;
+  max-width: 282px;
   max-height: 700px;
   background-color: $gray;
   padding: 12px;
   border-radius: 10px;
   overflow: auto;
+
+  @include netbook {
+    max-width: 48%;
+  }
+
+  @include mobileMedium {
+    max-width: 100%;
+  }
 
   > h2 {
     margin-bottom: 15px;
@@ -26,16 +37,30 @@
       border-radius: 5px;
       cursor: pointer;
 
+      &:hover > button {
+        opacity: 1;
+        visibility: visible;
+      }
+
       > p {
         width: 90%;
-        word-wrap: break-word;
-        word-break: break-all;
+        word-break: break-word;
+        overflow-wrap: break-word;
       }
 
       > button {
+        @include transition(all);
+
+        opacity: 0;
+        visibility: hidden;
         background-color: transparent;
         width: 10%;
         height: 20px;
+
+        @include tabletLarge {
+          opacity: 1;
+          visibility: visible;
+        }
       }
     }
   }

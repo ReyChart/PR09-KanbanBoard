@@ -60,36 +60,38 @@ const TaskDetails: FunctionComponent = () => {
 
   return (
     <Layout>
-      <div className="container">
-        <section className={styles.taskDetails}>
-          <div>
-            <h2>{task ? task.title : 'Task not found'}</h2>
-            <button onClick={handleClose} data-testid="close-button">
-              <IoMdClose />
-            </button>
-          </div>
-          <form className={styles.taskDetails__form}>
-            {!isEditing && <p onClick={handleEdit}>{description}</p>}
-            {isEditing && (
-              <>
-                <ReactTextareaAutosize
-                  className={styles.textarea}
-                  value={description}
-                  onChange={handleDescriptionChange}
-                />
-                <div>
-                  <Button onClick={handleSave} variant="submit" disabled={isSaveDisabled}>
-                    Change
-                  </Button>
-                  <Button onClick={handleCancel} variant="cancel">
-                    Cancel
-                  </Button>
-                </div>
-              </>
-            )}
-          </form>
-        </section>
-      </div>
+      <main>
+        <div className="container">
+          <section className={styles.taskDetails}>
+            <div>
+              <h2>{task ? task.title : 'Task not found'}</h2>
+              <button onClick={handleClose} data-testid="close-button">
+                <IoMdClose />
+              </button>
+            </div>
+            <form className={styles.taskDetails__form}>
+              {!isEditing && <p onClick={handleEdit}>{description}</p>}
+              {isEditing && (
+                <>
+                  <ReactTextareaAutosize
+                    className={styles.textarea}
+                    value={description}
+                    onChange={handleDescriptionChange}
+                  />
+                  <div>
+                    <Button onClick={handleSave} variant="submit" disabled={isSaveDisabled}>
+                      Change
+                    </Button>
+                    <Button onClick={handleCancel} variant="cancel">
+                      Cancel
+                    </Button>
+                  </div>
+                </>
+              )}
+            </form>
+          </section>
+        </div>
+      </main>
     </Layout>
   );
 };

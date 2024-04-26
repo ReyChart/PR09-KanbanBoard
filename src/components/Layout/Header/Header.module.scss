@@ -7,11 +7,19 @@
   > div {
     @include containerSettings;
 
+    @include mobileSmall {
+      justify-content: flex-end;
+    }
+
     > .header__logo {
       font-size: 28px;
       line-height: 33px;
       color: $white;
       cursor: pointer;
+
+      @include mobileSmall {
+        display: none;
+      }
     }
   }
 }

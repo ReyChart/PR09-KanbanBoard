@@ -29,7 +29,6 @@ const TaskColumn: FunctionComponent<ITaskColumnProps> = ({
 }) => {
   const [newTaskTitle, setNewTaskTitle] = useState<string>('');
   const [addingTask, setAddingTask] = useState<boolean>(false);
-  const [hoveredTaskId, setHoveredTaskId] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<IOptionType | null>(null);
   const [attemptedSubmit, setAttemptedSubmit] = useState<boolean>(false);
   const { removeTask, transferTask } = useKanban();
@@ -97,22 +96,16 @@ const TaskColumn: FunctionComponent<ITaskColumnProps> = ({
       <h2>{title}</h2>
       {tasks.map((task) => (
         <Link key={task.id} className={styles.taskColumn__link} to={`/tasks/${task.id}`}>
-          <div
-            key={task.id}
-            onMouseEnter={() => setHoveredTaskId(task.id)}
-            onMouseLeave={() => setHoveredTaskId(null)}
-          >
-            {task.title}
-            {hoveredTaskId === task.id && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  removeTask(task.id);
-                }}
-              >
-                <FiX />
-              </button>
-            )}
+          <div>
+            <p>{task.title}</p>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                removeTask(task.id);
+              }}
+            >
+              <FiX />
+            </button>
           </div>
         </Link>
       ))}

@@ -6,11 +6,19 @@
 
   > div {
     @include containerSettings;
+    padding: 10px 15px;
     color: $white;
+    gap: 15px 20px;
+
+    @include mobileSmall {
+      display: flex;
+      flex-direction: column;
+    }
 
     > div {
       display: flex;
-      gap: 36px;
+      flex-wrap: wrap;
+      gap: 15px 36px;
     }
   }
 }
