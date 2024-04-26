@@ -34,7 +34,7 @@ const User: FunctionComponent = () => {
 
   return (
     <div className={styles.user}>
-      <img src="/userAvatar.svg" alt="User avatar" />
+      <img src="/PR09-KanbanBoard/userAvatar.svg" alt="User avatar" />
       <button
         onClick={toggleDropdown}
         className={clsx(styles.btn__arrow, {
