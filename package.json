@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Easy-to-use and simple Kanban Board",
+  "homepage": "https://reychart.github.io/PR09-KanbanBoard/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
