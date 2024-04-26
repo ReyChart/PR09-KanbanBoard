@@ -1,30 +1,47 @@
-# React + TypeScript + Vite
+# Kanban Board
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Описание
+Удобная и простая в использовании Канбан доска на React.
 
-Currently, two official plugins are available:
+### Инструменты
+- React
+- Typescript
+- SCSS
+- Vite
+- Jest
+- Различные библиотеки _(ознакомиться можно в package.json)_
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Как запустить проект
+- Клонируем репозиторий на локальный ПК (```git clone https://github.com/ReyChart/PR09-KanbanBoard.git```)
+- Устанавливаем пакеты с помощью **yarn**
+- Запускаем проект с помощью **yarn dev**
+- Запускаем тесты с помощью **yarn test**
 
-## Expanding the ESLint configuration
+### Функциональные требования
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+**Требования к React**
+- Интерфейс должен быть поделён на компоненты. Перед началом работы хорошенько обдумайте, какие компоненты вы будете использовать. Деление на компоненты должно быть логичным и оправданным.
+- После того как определитесь с делением на компоненты, подумайте о том, как верно организовать файловую структуру.
+- Следуйте принципам модульности (используйте export, import).
+- Используйте Typescript для описания типов данных.
+- Используйте Synthetic events для работы с событиями.
+- Для вывода разного состояния элементов в зависимости от действий пользователя (пример: раскрытое/свернутое меню пользователя) используйте условный рендеринг.
+- Для реализации отдельных страниц для каждой задачи и перехода между страницами используйте библиотеку react-router.
+- Для ключевых React-компонентов необходимо добавить тесты.
+- При написании кода старайтесь следовать принципам KISS (Keep It Short and Simple — не усложняй) и DRY (Don’t Repeat Yourself — не повторяйся).
 
-- Configure the top-level `parserOptions` property like this:
+**Требования к верстке**
+- Вёрстка должна соответствовать макету. Добиваться Pixel Perfect соответствия не обязательно, но основные моменты должны быть соблюдены: цветовая гамма, шрифты, размеры, отступы.
+- Приложение должно корректно отображаться и на мобильных устройствах. Дизайн для мобильной версии вы можете найти в макете.
+- Соблюдайте семантическую вёрстку. В приложении должны присутствовать разделы <header>, <main> и <footer>. Кнопки должна быть реализованы элементом <button>, элементы дропдауна — списком <select> и так далее.
+- При наведении курсора на любые кликабельные элементы должен появляться cursor: pointer.
+- Учитывайте состояния кнопки + Add card — активная и неактивная.
+- Если кнопка активна, её внешний вид должен соответствовать макету. При наведении она должна подсвечиваться (менять цвет), а курсор должен меняться на pointer.
+- Если кнопка неактивна (назначен атрибут disabled), её цвет должен отличаться от активного состояния, кнопка не должна реагировать на наведение курсора (цвет остаётся таким же, не появляется курсор pointer).
+- Можете использовать любой вариант подключения стилей на ваше усмотрение: общий файл стилей проекта, CSS-модули или специальные React-библиотеки для стилизации компонентов (например, Styled Components).
+- Использовать селекторы по тегу и id для задания стилей нельзя. Используйте классы.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Дополнительно
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+![kanbanBoardColumn](https://github.com/ReyChart/PR09-KanbanBoard/assets/126756819/89ec2629-9afa-4a0a-a213-6ba517f4fdd4)
+![kanbanBoardTaskInfo](https://github.com/ReyChart/PR09-KanbanBoard/assets/126756819/8e596702-0b7f-467f-ab52-6e01a12bf248)
